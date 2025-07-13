@@ -295,6 +295,51 @@
                 gap: 15px;
             }
         }
+        @media (max-width: 400px) {
+            .captcha-text {
+                font-size: 1.2rem;
+                letter-spacing: 3px;
+            }
+            
+            .btn-aai {
+                padding: 10px 20px;
+            }
+        }
+        @media (max-width: 320px) {
+            .navbar-brand img {
+                height: 30px;
+            }
+            
+            .login-container {
+                padding: 20px;
+            }
+            
+            .form-control {
+                height: 45px;
+            }
+            
+            .captcha-text {
+                font-size: 1rem;
+                letter-spacing: 2px;
+            }
+        }
+        .btn-close {
+            color: var(--aai-dark);
+        }
+        .btn-close:hover {
+            color: var(--aai-primary);
+        }
+        .modal-content {
+            border-radius: 15px;
+        }
+        .modal-header {
+            background: linear-gradient(90deg, var(--aai-primary), var(--aai-secondary));
+            color: white;
+            border-radius: 15px 15px 0 0;
+        }
+        .modal-footer {
+            border-top: none;
+        }
     </style>
 </head>
 <body>
@@ -311,7 +356,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="\index.html">Home</a>
+                        <a class="nav-link" href=".\index.html">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="dashboard.html">Dashboard</a>
@@ -320,7 +365,7 @@
                         <a class="nav-link" href="workflow.html">Workflow</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="ITticketing.html">IT Tickets</a>
+                        <a class="nav-link" href="features.html">Feature</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="contact.html">Help Center</a>
@@ -782,6 +827,11 @@
             if (userAgent.match(/Linux/i)) return 'Linux';
             return 'Unknown';
         }
+        // Initialize tooltips
+        document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
+            new bootstrap.Tooltip(el);
+        });
+        
     </script>
 </body>
 </html>
