@@ -29,6 +29,7 @@
             line-height: 1.6;
             overflow-x: hidden;
             background-color: var(--aai-light);
+            min-height: 100vh;
         }
         
         /* Navbar */
@@ -155,10 +156,28 @@
             box-shadow: 0 5px 15px rgba(26, 62, 114, 0.3);
         }
         
+        /* Error Messages */
+        .error-message {
+            color: var(--aai-danger);
+            font-size: 0.9rem;
+            margin-top: -15px;
+            margin-bottom: 15px;
+            display: none;
+        }
+        
+        /* Success Message */
+        .success-message {
+            color: var(--aai-success);
+            font-weight: 500;
+            text-align: center;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
         /* Responsive */
         @media (max-width: 768px) {
             .login-container {
-                margin: 30px auto;
+                margin: 30px 15px;
             }
             
             .role-selector {
@@ -170,6 +189,14 @@
                 border-right: none;
                 border-bottom: 1px solid var(--aai-primary);
             }
+            
+            .navbar-brand {
+                font-size: 1.2rem;
+            }
+            
+            .navbar-brand img {
+                height: 30px;
+            }
         }
     </style>
 </head>
@@ -177,7 +204,7 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg">
         <div class="container">
-            <a class="navbar-brand" href="index.html">
+            <a class="navbar-brand" href="../index.html">
                 <img src="logo.png" alt="AAI Logo" class="img-fluid">
                 AAI Asset Management
             </a>
@@ -186,20 +213,9 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
+                    
                     <li class="nav-item">
-                        <a class="nav-link" href="index.html">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="dashboard.html">Dashboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="assets.html">Assets</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="reports.html">Reports</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="help-center.html">Help</a>
+                        <a class="nav-link" href="../welcome.html">back </a>
                     </li>
                 </ul>
             </div>
@@ -215,48 +231,61 @@
             </div>
             
             <div class="login-body">
+                <!-- Success Message Placeholder -->
+                <div class="success-message" id="successMessage"></div>
+                
                 <!-- Role Selector -->
                 <div class="role-selector">
-                    <button class="role-btn active" id="employeeBtn">Employee</button>
-                    <button class="role-btn" id="adminBtn">Administrator</button>
+                    <button class="role-btn active" id="employeeBtn" aria-pressed="true" aria-label="Employee login">Employee</button>
+                    <button class="role-btn" id="adminBtn" aria-pressed="false" aria-label="Administrator login">Administrator</button>
                 </div>
                 
                 <!-- Employee Login Form -->
                 <form id="employeeLoginForm">
                     <div class="mb-3">
                         <label for="employeeId" class="form-label">Employee ID</label>
-                        <input type="text" class="form-control" id="employeeId" placeholder="EMP1001" required>
+                        <input type="text" class="form-control" id="employeeId" placeholder="EMP1001" required aria-required="true">
+                        <div class="error-message" id="employeeIdError">Please enter a valid Employee ID</div>
                     </div>
                     
                     <div class="mb-3">
                         <label for="email" class="form-label">AAI Email</label>
-                        <input type="email" class="form-control" id="email" placeholder="user@aai.gov.in" required>
+                        <input type="email" class="form-control" id="email" placeholder="user@aai.gov.in" required aria-required="true">
+                        <div class="error-message" id="emailError">Please enter a valid AAI email address</div>
                     </div>
                     
                     <div class="mb-3">
                         <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
+                        <input type="password" class="form-control" id="password" placeholder="Enter your password" required aria-required="true">
+                        <div class="error-message" id="passwordError">Password is required</div>
                         <div class="form-text text-end">
                             <a href="#" data-bs-toggle="modal" data-bs-target="#forgotPasswordModal">Forgot Password?</a>
                         </div>
                     </div>
                     
-                    
-
-                    
-                    <button type="submit" class="btn btn-aai">Login <i class="fas fa-sign-in-alt ms-2"></i></button>
+                    <button type="submit" class="btn btn-aai" aria-label="Submit employee login">
+                        Login <i class="fas fa-sign-in-alt ms-2"></i>
+                    </button>
                 </form>
                 
                 <!-- Admin Login Form (hidden by default) -->
                 <form id="adminLoginForm" style="display: none;">
                     <div class="mb-3">
                         <label for="adminId" class="form-label">Administration ID</label>
-                        <input type="text" class="form-control" id="adminId" placeholder="ADM1001" required>
+                        <input type="text" class="form-control" id="adminId" placeholder="ADM1001" required aria-required="true">
+                        <div class="error-message" id="adminIdError">Please enter a valid Admin ID</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="adminEmail" class="form-label">AAI Email</label>
+                        <input type="email" class="form-control" id="adminEmail" placeholder="admin@aai.gov.in" required aria-required="true">
+                        <div class="error-message" id="adminEmailError">Please enter a valid AAI email address</div>
                     </div>
                     
                     <div class="mb-3">
                         <label for="adminPassword" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="adminPassword" placeholder="Enter admin password" required>
+                        <input type="password" class="form-control" id="adminPassword" placeholder="Enter admin password" required aria-required="true">
+                        <div class="error-message" id="adminPasswordError">Password is required</div>
                     </div>
                     
                     <!-- Admin Security Section -->
@@ -267,24 +296,31 @@
                         </div>
                         <div class="mb-3">
                             <label for="securityQuestion" class="form-label">Security Question</label>
-                            <select class="form-control" id="securityQuestion" required>
+                            <select class="form-control" id="securityQuestion" required aria-required="true">
                                 <option value="">Select a question</option>
                                 <option value="1">What was your first pet's name?</option>
                                 <option value="2">In what city were you born?</option>
                                 <option value="3">What is your mother's maiden name?</option>
                             </select>
+                            <div class="error-message" id="securityQuestionError">Please select a security question</div>
                         </div>
                         <div class="mb-3">
                             <label for="securityAnswer" class="form-label">Answer</label>
-                            <input type="password" class="form-control" id="securityAnswer" placeholder="Enter your answer" required>
+                            <input type="password" class="form-control" id="securityAnswer" placeholder="Enter your answer" required aria-required="true">
+                            <div class="error-message" id="securityAnswerError">Please provide an answer</div>
                         </div>
                     </div>
                     
-                    <button type="submit" class="btn btn-aai">Admin Login <i class="fas fa-user-shield ms-2"></i></button>
+                    <button type="submit" class="btn btn-aai" aria-label="Submit admin login">
+                        Admin Login <i class="fas fa-user-shield ms-2"></i>
+                    </button>
                 </form>
                 
                 <div class="text-center mt-3">
                     <p class="mb-0">New to AAI Asset Management? <a href="register.html">Register for access</a></p>
+                </div>
+                <div class="text-center mt-3">
+                    <p class="mb-0">Facing issue in login? <a href="help-center.html">Get help</a></p>
                 </div>
             </div>
         </div>
@@ -302,12 +338,15 @@
                     <form id="forgotPasswordForm">
                         <div class="mb-3">
                             <label for="resetEmployeeId" class="form-label">Employee ID</label>
-                            <input type="text" class="form-control" id="resetEmployeeId" placeholder="EMP1001" required>
+                            <input type="text" class="form-control" id="resetEmployeeId" placeholder="EMP1001" required aria-required="true">
+                            <div class="error-message" id="resetEmployeeIdError">Please enter your Employee ID</div>
                         </div>
                         <div class="mb-3">
                             <label for="resetEmail" class="form-label">Registered AAI Email</label>
-                            <input type="email" class="form-control" id="resetEmail" placeholder="user@aai.gov.in" required>
+                            <input type="email" class="form-control" id="resetEmail" placeholder="user@aai.gov.in" required aria-required="true">
+                            <div class="error-message" id="resetEmailError">Please enter your registered email</div>
                         </div>
+                        <div class="success-message" id="resetSuccessMessage"></div>
                         <button type="submit" class="btn btn-aai">Send Reset Link</button>
                     </form>
                 </div>
@@ -319,20 +358,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Custom JS -->
     <script>
-        // Sample Asset Data
-        const assetData = [
-            { id: "AST-2023-001", type: "Laptop", model: "Dell Latitude 5420", assignedTo: "EMP1001", location: "delhi", status: "Active" },
-            { id: "AST-2023-002", type: "Monitor", model: "Dell 27\" 4K", assignedTo: "EMP1001", location: "delhi", status: "Active" },
-            { id: "AST-2023-003", type: "Phone", model: "iPhone 13", assignedTo: "EMP1002", location: "mumbai", status: "Active" },
-            { id: "AST-2023-004", type: "Tablet", model: "iPad Pro", assignedTo: "EMP1003", location: "bangalore", status: "In Repair" },
-            { id: "AST-2023-005", type: "Laptop", model: "MacBook Pro 14\"", assignedTo: "ADM1001", location: "hyderabad", status: "Active" }
-        ];
-
         // Employee database
         const employees = [
-            { name: "Aditya Sharma", employeeId: "EMP1001", email: "aditya.s@aai.gov.in", password: "test@123", assets: ["AST-2023-001", "AST-2023-002"] },
-            { name: "Kavita Mehra", employeeId: "EMP1002", email: "kavita.mehra@aai.gov.in", password: "kavita2024", assets: ["AST-2023-003"] },
-            { name: "Rohit Khanna", employeeId: "EMP1003", email: "rohit.k@aai.gov.in", password: "rohitpass", assets: ["AST-2023-004"] }
+            { name: "Aditya Sharma", employeeId: "EMP1001", email: "aditya.s@aai.gov.in", password: "test@123" },
+            { name: "Kavita Mehra", employeeId: "EMP1002", email: "kavita.mehra@aai.gov.in", password: "kavita2024" },
+            { name: "Rohit Khanna", employeeId: "EMP1003", email: "rohit.k@aai.gov.in", password: "rohitpass" }
         ];
 
         // Admin database
@@ -347,65 +377,101 @@
         const adminBtn = document.getElementById('adminBtn');
         const employeeLoginForm = document.getElementById('employeeLoginForm');
         const adminLoginForm = document.getElementById('adminLoginForm');
-        const employeeAssetFields = document.getElementById('employeeAssetFields');
+        const successMessage = document.getElementById('successMessage');
+
+        // Helper function to show error message
+        function showError(elementId, message) {
+            const errorElement = document.getElementById(elementId);
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+        }
+
+        // Helper function to hide error message
+        function hideError(elementId) {
+            document.getElementById(elementId).style.display = 'none';
+        }
+
+        // Helper function to show success message
+        function showSuccess(message) {
+            successMessage.textContent = message;
+            successMessage.style.display = 'block';
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+            }, 5000);
+        }
 
         // Role Selector
-        employeeBtn.addEventListener('click', function() {
+        function switchToEmployee() {
             employeeBtn.classList.add('active');
             adminBtn.classList.remove('active');
+            employeeBtn.setAttribute('aria-pressed', 'true');
+            adminBtn.setAttribute('aria-pressed', 'false');
             employeeLoginForm.style.display = 'block';
             adminLoginForm.style.display = 'none';
-            employeeAssetFields.style.display = 'block';
-        });
+        }
 
-        adminBtn.addEventListener('click', function() {
+        function switchToAdmin() {
             adminBtn.classList.add('active');
             employeeBtn.classList.remove('active');
+            adminBtn.setAttribute('aria-pressed', 'true');
+            employeeBtn.setAttribute('aria-pressed', 'false');
             adminLoginForm.style.display = 'block';
             employeeLoginForm.style.display = 'none';
-            employeeAssetFields.style.display = 'none';
-        });
+        }
+
+        employeeBtn.addEventListener('click', switchToEmployee);
+        adminBtn.addEventListener('click', switchToAdmin);
 
         // Employee Login Form Submission
         employeeLoginForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
+            // Reset error messages
+            hideError('employeeIdError');
+            hideError('emailError');
+            hideError('passwordError');
+            
             const employeeId = document.getElementById('employeeId').value.trim().toUpperCase();
             const email = document.getElementById('email').value.trim().toLowerCase();
             const password = document.getElementById('password').value;
-            const assetId = document.getElementById('assetId').value.trim();
-            const location = document.getElementById('location').value;
+            
+            // Basic validation
+            let isValid = true;
+            
+            if (!employeeId) {
+                showError('employeeIdError', 'Employee ID is required');
+                isValid = false;
+            }
+            
+            if (!email || !email.endsWith('@aai.gov.in')) {
+                showError('emailError', 'Please enter a valid AAI email address');
+                isValid = false;
+            }
+            
+            if (!password) {
+                showError('passwordError', 'Password is required');
+                isValid = false;
+            }
+            
+            if (!isValid) return;
             
             // Find employee
             const employee = employees.find(emp => 
                 emp.employeeId === employeeId && 
-                emp.email === email
+                emp.email === email &&
+                emp.password === password
             );
             
-            // Validate credentials
-            if (!employee) {
-                showAlert('Invalid user. Please check your Employee ID and Email.', 'danger');
-            } else if (employee.password !== password) {
-                showAlert('Incorrect password. Please try again.', 'danger');
-            } else {
-                // Check asset assignment if provided
-                if (assetId) {
-                    const asset = assetData.find(ast => ast.id === assetId);
-                    if (!asset) {
-                        showAlert('Invalid Asset ID. Please check your assigned assets.', 'danger');
-                        return;
-                    }
-                    if (!employee.assets.includes(assetId)) {
-                        showAlert('This asset is not assigned to you.', 'danger');
-                        return;
-                    }
-                }
+            if (employee) {
+                // Show success message
+                showSuccess(`Welcome ${employee.name}! Redirecting to dashboard...`);
                 
-                showAlert(`Welcome back, ${employee.name}! Redirecting to dashboard...`, 'success');
-                // In a real application, you would redirect to the dashboard
+                // Redirect to homepage after 1 second
                 setTimeout(() => {
-                    alert(`Login successful! This would redirect to the employee dashboard.`);
-                }, 1500);
+                    window.location.href = '../index.html';
+                }, 1000);
+            } else {
+                showError('passwordError', 'Invalid credentials. Please try again or contact help desk.');
             }
         });
 
@@ -413,38 +479,97 @@
         adminLoginForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
+            // Reset error messages
+            hideError('adminIdError');
+            hideError('adminEmailError');
+            hideError('adminPasswordError');
+            hideError('securityQuestionError');
+            hideError('securityAnswerError');
+            
             const adminId = document.getElementById('adminId').value.trim().toUpperCase();
+            const adminEmail = document.getElementById('adminEmail').value.trim().toLowerCase();
             const password = document.getElementById('adminPassword').value;
             const securityQuestion = document.getElementById('securityQuestion').value;
-            const securityAnswer = document.getElementById('securityAnswer').value;
+            const securityAnswer = document.getElementById('securityAnswer').value.toLowerCase();
+            
+            // Basic validation
+            let isValid = true;
+            
+            if (!adminId) {
+                showError('adminIdError', 'Admin ID is required');
+                isValid = false;
+            }
+            
+            if (!adminEmail || !adminEmail.endsWith('@aai.gov.in')) {
+                showError('adminEmailError', 'Please enter a valid AAI email address');
+                isValid = false;
+            }
+            
+            if (!password) {
+                showError('adminPasswordError', 'Password is required');
+                isValid = false;
+            }
+            
+            if (!securityQuestion) {
+                showError('securityQuestionError', 'Please select a security question');
+                isValid = false;
+            }
+            
+            if (!securityAnswer) {
+                showError('securityAnswerError', 'Please provide an answer');
+                isValid = false;
+            }
+            
+            if (!isValid) return;
             
             // Find admin
             const admin = admins.find(adm => 
                 adm.adminId === adminId && 
-                adm.password === password
+                adm.email === adminEmail &&
+                adm.password === password &&
+                adm.securityQuestion === securityQuestion &&
+                adm.securityAnswer === securityAnswer
             );
             
-            // Validate credentials
-            if (!admin) {
-                showAlert('Invalid admin credentials. Please check your Admin ID and Password.', 'danger');
-            } else if (admin.securityQuestion !== securityQuestion) {
-                showAlert('Invalid security question selected.', 'danger');
-            } else if (admin.securityAnswer !== securityAnswer.toLowerCase()) {
-                showAlert('Incorrect security answer. Please try again.', 'danger');
-            } else {
-                showAlert(`Welcome, ${admin.name}! Redirecting to admin dashboard...`, 'success');
-                // In a real application, you would redirect to the admin dashboard
+            if (admin) {
+                // Show success message
+                showSuccess(`Welcome Admin ${admin.name}! Redirecting to dashboard...`);
+                
+                // Redirect to homepage after 1 second
                 setTimeout(() => {
-                    alert(`Admin login successful! This would redirect to the admin dashboard.`);
-                }, 1500);
+                    window.location.href = '../index.html';
+                }, 1000);
+            } else {
+                showError('securityAnswerError', 'Invalid credentials or security answer. Please try again.');
             }
         });
 
         // Forgot Password Form
         document.getElementById('forgotPasswordForm').addEventListener('submit', function(e) {
             e.preventDefault();
+            
+            // Reset messages
+            hideError('resetEmployeeIdError');
+            hideError('resetEmailError');
+            document.getElementById('resetSuccessMessage').style.display = 'none';
+            
             const employeeId = document.getElementById('resetEmployeeId').value.trim().toUpperCase();
             const email = document.getElementById('resetEmail').value.trim().toLowerCase();
+            
+            // Basic validation
+            let isValid = true;
+            
+            if (!employeeId) {
+                showError('resetEmployeeIdError', 'Employee ID is required');
+                isValid = false;
+            }
+            
+            if (!email || !email.endsWith('@aai.gov.in')) {
+                showError('resetEmailError', 'Please enter a valid AAI email address');
+                isValid = false;
+            }
+            
+            if (!isValid) return;
             
             const employee = employees.find(emp => 
                 emp.employeeId === employeeId && 
@@ -452,59 +577,21 @@
             );
             
             if (employee) {
-                showAlert(`Password reset link has been sent to ${email}`, 'success', 'forgotPasswordModal');
-                document.getElementById('forgotPasswordForm').reset();
-                // In a real application, you would send an email with a reset link
-            } else {
-                showAlert('No account found with that Employee ID and Email combination.', 'danger', 'forgotPasswordModal');
-            }
-        });
-
-        // Helper function to show alerts
-        function showAlert(message, type, modalId = null) {
-            const alertDiv = document.createElement('div');
-            alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
-            alertDiv.role = 'alert';
-            alertDiv.innerHTML = `
-                ${message}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            `;
-            
-            let container;
-            if (modalId) {
-                container = document.querySelector(`#${modalId} .modal-body`);
-            } else {
-                container = document.querySelector('.login-body');
-            }
-            
-            // Remove any existing alerts
-            const existingAlert = container.querySelector('.alert');
-            if (existingAlert) {
-                existingAlert.remove();
-            }
-            
-            container.prepend(alertDiv);
-            
-            // Auto-dismiss after 5 seconds
-            setTimeout(() => {
-                const bsAlert = new bootstrap.Alert(alertDiv);
-                bsAlert.close();
-            }, 5000);
-        }
-
-        // Auto-fill asset info when employee ID changes
-        document.getElementById('employeeId').addEventListener('change', function() {
-            const employeeId = this.value.trim().toUpperCase();
-            const employee = employees.find(emp => emp.employeeId === employeeId);
-            
-            if (employee && employee.assets.length > 0) {
-                const assetId = employee.assets[0];
-                const asset = assetData.find(ast => ast.id === assetId);
+                // Show success message
+                const successMsg = document.getElementById('resetSuccessMessage');
+                successMsg.textContent = `Password reset link has been sent to ${email}`;
+                successMsg.style.display = 'block';
                 
-                if (asset) {
-                    document.getElementById('assetId').value = asset.id;
-                    document.getElementById('location').value = asset.location;
-                }
+                // Reset form
+                document.getElementById('forgotPasswordForm').reset();
+                
+                // Close the modal after 3 seconds
+                setTimeout(() => {
+                    var modal = bootstrap.Modal.getInstance(document.getElementById('forgotPasswordModal'));
+                    modal.hide();
+                }, 3000);
+            } else {
+                showError('resetEmailError', 'No account found with that Employee ID and Email combination.');
             }
         });
     </script>
